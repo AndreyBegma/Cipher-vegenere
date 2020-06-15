@@ -24,6 +24,9 @@ void vigenere_transform(const char* str, const char* key, int key_length, int st
   char* big_alph[26] = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
   int k_i, s_i = -1;
   int final=-1;
+  int k_status = 0;
+  int another_char = 0;
+  int number_another_char = 0;
   for(int i = 0; i < str_length;i++)
   {
     for(int j = 0; j <=26; j++)
@@ -33,6 +36,18 @@ void vigenere_transform(const char* str, const char* key, int key_length, int st
         k_i = j;
         break;
       }
+      else
+      if (str[i] == *big_alph[j])
+      {
+        k_i = j;
+        k_status = 1;
+        break;
+      }
+      else
+      {
+        another_char=1;
+        number_another_char = j;
+      }
     }
     for (int f = 0; f<=26; f++)
     {
@@ -41,13 +56,33 @@ void vigenere_transform(const char* str, const char* key, int key_length, int st
         s_i = f;
         break;
       }
+      else
+      if (str_key[i] == *big_alph[f])
+      {
+        s_i = f;
+        break;
+      }
     }
+      if (another_char!=1)
+      {
+        printf("%c\n",str[i]);
+      }
+      else
+      {
       final = k_i + 26 - s_i;
       if (final >=26)
       {
         final = final-26*(final/26);
       }
+      if (k_status == 0)
+      {
       printf("%s",alph[final]);
+      }
+      else
+      {
+        printf("%s",big_alph[final]);
+      }
+      k_status = 0;}
   /*  printf("\n");
     printf("%d",k_i);printf("%s"," "); printf("%d",s_i); printf("%s","="); printf("%d",final);
     printf("\n");*/
